@@ -18,7 +18,24 @@ class User extends Authenticatable
         "email",
         "mobile",
         "role",
+        "department_id",
         "password",
+        "status"
       ];
+
+      public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(UserRequest::class, 'teacher_id');
+    }
+
+    public function approvals()
+    {
+        return $this->hasMany(RequestApproval::class, 'approved_by');
+    }
 
 }

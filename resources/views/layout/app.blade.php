@@ -160,8 +160,6 @@ body {
     margin-top: 10px;
     color: #2c3e50;
 }
-
-/* TABLE */
 .table-container {
     margin-top: 30px;
     background: #fff;
@@ -179,8 +177,6 @@ table th, table td {
     padding: 12px;
     border-bottom: 1px solid #eee;
 }
-
-/* RESPONSIVE */
 @media(max-width: 768px){
     .sidebar {
         display: none;
@@ -191,13 +187,11 @@ table th, table td {
         width: 100%;
     }
 }
-/* make form inline so it behaves like button */
+
 .logout-form {
     margin: 0;
     padding: 0;
 }
-
-/* logout button styled like navbar button */
 .logout-btn {
     border: none;
     outline: none;
@@ -237,21 +231,39 @@ li a{
 <div class="sidebar">
 
     <div class="profile">
-        <img src="https://i.pravatar.cc/100">
+        <img src="{{ asset('images/pic1.png') }}">
+        @if (Auth::user()->role=="admin")
         <h4>Admin</h4>
-        <p>Academic System</p>
+        @elseif (Auth::user()->role=="hod")
+        <h4>HOD</h4>
+        @elseif (Auth::user()->role=="principle")
+        <h4>Principle</h4>
+        @endif
+        <p>Kist Academic System</p>
     </div>
 
     <ul>
+        @if (Auth::user()->role=="admin")
         <li class="active"><i class="bi bi-speedometer2"></i> <a href="{{ route('dashboard') }}">Dashboard</a></li>
+        <li><i class="bi bi-people"></i> <a href="{{ route('departments.index') }}">Departments</a></li>
         <li><i class="bi bi-people"></i> <a href="{{ route('users.index') }}">Users</a></li>
-        <li><i class="bi bi-book"></i> Courses</li>
-        <li><i class="bi bi-person-badge"></i> Teachers</li>
-        <li><i class="bi bi-bar-chart"></i> Attendance</li>
+        <li><i class="bi bi-people"></i> <a href="{{ route('equipment.index') }}">Equipments</a></li>
+        <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
+        
         <li><i class="bi bi-graph-up"></i> Reports</li>
         <li><i class="bi bi-gear"></i> Settings</li>
+        @elseif (Auth::user()->role=="hod")
+        <li class="active"><i class="bi bi-speedometer2"></i> <a href="{{ route('dashboard') }}">Dashboard</a></li>
+         <li><i class="bi bi-people"></i> <a href="{{ route('users.index') }}">Teachers</a></li>
+        <li><i class="bi bi-people"></i> <a href="{{ route('equipment.index') }}">Equipments</a></li>
+        <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
+        <li><i class="bi bi-gear"></i> Settings</li>
+
+        @endif
     </ul>
 </div>
+
+
 
 <!-- MAIN -->
 @yield('content')
