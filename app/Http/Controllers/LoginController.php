@@ -48,6 +48,11 @@ class LoginController extends Controller
         $total_teachers = User::where("role","teacher")->count();
         $teachers = User::where("role","teacher")->take(5)->where('department_id',Auth::user()->department_id)->get();
         $total_equipment = Equipment::all();
-        return view("dashboard",compact('teachers','total_hod','total_request','total_teachers','total_equipment','deviceStats'));
+        $equipments = Equipment::all();
+        $equipmentNames = $equipments->pluck('equipment_name');
+        $equipmentQuantity = $equipments->pluck('quantity_available');
+        $app_req = UserRequest::where('overall_status','approved')->count();
+        $pen_req = UserRequest::where('overall_status','pending_hod')->count();
+        return view("dashboard",compact('pen_req','app_req','equipmentNames','equipmentQuantity','teachers','total_hod','total_request','total_teachers','total_equipment','deviceStats'));
     }
 }

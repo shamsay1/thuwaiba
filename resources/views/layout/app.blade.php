@@ -233,44 +233,108 @@ li a{
 
     <div class="profile">
         <img src="{{ asset('images/pic1.png') }}">
+
         @if (Auth::user()->role=="admin")
-        <h4>Admin</h4>
-        <p>Kist Academic System</p>
+            <h4>Admin</h4>
+            <p>Kist Academic System</p>
 
         @elseif (Auth::user()->role=="hod")
-        <h4>HOD</h4>
-        <p>{{Auth::user()->department->department_name}}</p>
-        <p>Kist Academic System</p>
+            <h4>HOD</h4>
+            <p>{{ Auth::user()->department->department_name }}</p>
+            <p>Kist Academic System</p>
+
         @elseif (Auth::user()->role=="teacher")
-        <h4>Teacher</h4>
-        <p>{{Auth::user()->department->department_name}}</p>
-        <p>Kist Academic System</p>
-        
+            <h4>Teacher</h4>
+            <p>{{ Auth::user()->department->department_name }}</p>
+            <p>Kist Academic System</p>
         @endif
     </div>
 
     <ul>
+
         @if (Auth::user()->role=="admin")
-        <li class="active"><i class="bi bi-speedometer2"></i> <a href="{{ route('dashboard') }}">Dashboard</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('departments.index') }}">Departments</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('users.index') }}">Manage Users</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('equipment.index') }}">Equipments</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
-        
-        <li><i class="bi bi-graph-up"></i> Reports</li>
-        <li><i class="bi bi-gear"></i> Settings</li>
+
+            <li class="active">
+                <i class="bi bi-speedometer2"></i>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+            </li>
+
+            <li>
+                <i class="bi bi-building"></i>
+                <a href="{{ route('departments.index') }}">Departments</a>
+            </li>
+
+            <li>
+                <i class="bi bi-people-fill"></i>
+                <a href="{{ route('users.index') }}">Manage Users</a>
+            </li>
+
+            <li>
+                <i class="bi bi-pc-display"></i>
+                <a href="{{ route('equipment.index') }}">Equipments</a>
+            </li>
+
+            <li>
+                <i class="bi bi-file-earmark-text-fill"></i>
+                <a href="{{ route('requests.index') }}">Requests</a>
+            </li>
+
+            <li>
+                <i class="bi bi-bar-chart-line-fill"></i>
+                <a href="#">Reports</a>
+            </li>
+
+            <li>
+                <i class="bi bi-gear-fill"></i>
+                <a href="#">Settings</a>
+            </li>
+
         @elseif (Auth::user()->role=="hod")
-        <li class="active"><i class="bi bi-speedometer2"></i> <a href="{{ route('dashboard') }}">Dashboard</a></li>
-         <li><i class="bi bi-people"></i> <a href="{{ route('users.index') }}">Teachers</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('equipment.index') }}">Equipments</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
-        <li><i class="bi bi-gear"></i> Settings</li>
+
+            <li class="active">
+                <i class="bi bi-speedometer2"></i>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+            </li>
+
+            <li>
+                <i class="bi bi-person-workspace"></i>
+                <a href="{{ route('users.index') }}">Teachers</a>
+            </li>
+
+            <li>
+                <i class="bi bi-pc-display-horizontal"></i>
+                <a href="{{ route('equipment.index') }}">Equipments</a>
+            </li>
+
+            <li>
+                <i class="bi bi-journal-check"></i>
+                <a href="{{ route('requests.index') }}">Requests</a>
+            </li>
+
+            <li>
+                <i class="bi bi-gear-fill"></i>
+                <a href="#">Settings</a>
+            </li>
+
         @elseif (Auth::user()->role=="teacher")
-        <li class="active"><i class="bi bi-speedometer2"></i> <a href="{{ route('dashboard') }}">Dashboard</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
-        <li><i class="bi bi-gear"></i> Settings</li>
-         
+
+            <li class="active">
+                <i class="bi bi-speedometer2"></i>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+            </li>
+
+            <li>
+                <i class="bi bi-send-check-fill"></i>
+                <a href="{{ route('requests.index') }}">Requests</a>
+            </li>
+
+            <li>
+                <i class="bi bi-gear-fill"></i>
+                <a href="#">Settings</a>
+            </li>
+
         @endif
+
     </ul>
 </div>
 

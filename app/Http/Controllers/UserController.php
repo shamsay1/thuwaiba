@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Equipment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class UserController extends Controller
 {
     public function index(){
         if(Auth::user()->role=="admin"){
+             
         $users = User::where('role','!=','admin')->get();
         }elseif(Auth::user()->role=="hod"){
         $users = User::where('role','teacher')->where('department_id',Auth::user()->department_id)->get();

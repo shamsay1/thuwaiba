@@ -7,17 +7,12 @@
         <h3>Dashboard</h3>
 
         <div class="user">
-
-            <!-- ADD USER BUTTON -->
-            
-
-            <!-- LOGOUT -->
             <form method="POST" action="{{ route('logout') }}" class="logout-form">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </button>
-            </form>
+    @csrf
+    <button type="submit" class="logout-btn">
+        <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+</form>
 
         </div>
     </div>

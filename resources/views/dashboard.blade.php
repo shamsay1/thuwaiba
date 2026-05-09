@@ -171,6 +171,51 @@
 
     </div>
 
+    @elseif (Auth::user()->role=="teacher")
+    <div class="row g-4">
+
+    <!-- Approved Request -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-lg rounded-4 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h6 class="text-muted mb-2">Approved Request</h6>
+                    <h2 class="fw-bold text-primary">
+                        {{ $app_req }}
+                    </h2>
+                </div>
+
+                <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+                    <i class="bi bi-check-circle-fill fs-2 text-primary"></i>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Request -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-lg rounded-4 h-100">
+            <div class="card-body d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h6 class="text-muted mb-2">Pending Request</h6>
+                    <h2 class="fw-bold text-warning">
+                        {{ $pen_req }}
+                    </h2>
+                </div>
+
+                <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+                    <i class="bi bi-hourglass-split fs-2 text-warning"></i>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
     @endif
 
 </div>
@@ -183,7 +228,7 @@
         <div class="box-header">
             <h3>Device Statistics</h3>
         </div>
-
+      @if (Auth::user()->role=="hod")
         <div class="chart-container">
 
             @php
@@ -210,6 +255,11 @@
             @endforeach
 
         </div>
+        @elseif (Auth::user()->role=="admin")
+        <div class="chart-container" style="width:80%; height:400px;">
+    <canvas id="equipmentChart"></canvas>
+</div>
+    @endif
 
     </div>
 
@@ -245,12 +295,45 @@
 
         </table>
         <div style="text-align: center;margin-top: 4px">
-        <a href="" style="text-decoration: none">Viewl all</a>
+        <a href="/users" style="text-decoration: none">View all</a>
         </div>
 
     </div>
 
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const equipmentNames = @json($equipmentNames);
+    const equipmentQuantity = @json($equipmentQuantity);
+
+    const ctx = document.getElementById('equipmentChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: equipmentNames,
+            datasets: [{
+                label: 'Equipment Quantity',
+                data: equipmentQuantity,
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 
 
