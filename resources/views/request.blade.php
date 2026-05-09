@@ -38,7 +38,7 @@
                     <th>Department</th>
                     <th>Equipment</th>
                     <th>Quantity</th>
-                    <th>Reason</th>
+                    <th>Description</th>
                     <th>Status</th>
                     <th>Date</th>
                     <th>Action</th>
@@ -258,7 +258,7 @@
                     </div>
 
                     <div class="mb-2">
-                        <label>Reason</label>
+                        <label>Description</label>
                         <textarea name="reason" class="form-control"></textarea>
                     </div>
 

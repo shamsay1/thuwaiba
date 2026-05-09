@@ -265,7 +265,7 @@
 
                         <div class="col-md-6 mb-3">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" required>
+                            <input type="password" name="password" value="12345" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
