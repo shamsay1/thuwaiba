@@ -44,10 +44,10 @@ class LoginController extends Controller
     ->select('equipment_name', 'quantity_available')
     ->where('equipment.department_id',Auth::user()->department_id)->get();
         $total_hod = User::where("role","hod")->count();
-        $total_request = UserRequest::count();
+        $total_request = UserRequest::all();
         $total_teachers = User::where("role","teacher")->count();
         $teachers = User::where("role","teacher")->take(5)->where('department_id',Auth::user()->department_id)->get();
-        $total_equipment = Equipment::count();
+        $total_equipment = Equipment::all();
         return view("dashboard",compact('teachers','total_hod','total_request','total_teachers','total_equipment','deviceStats'));
     }
 }

@@ -1,6 +1,5 @@
 @extends('layout.app')
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 @section('content')
 
@@ -50,7 +49,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
 
-                    <td>{{ $req->user->firstname ?? '' }}</td>
+                    <td>{{ $req->teacher->firstname ?? '' }} {{ $req->teacher->middlename ?? '' }}  {{ $req->teacher->lastname ?? '' }}</td>
 
                     <td>{{ $req->department->department_name ?? '' }}</td>
 
@@ -61,20 +60,99 @@
                     <td>{{ $req->reason }}</td>
 
                     <td>
+                        @if($req->overall_status =="pending_hod")
                         <span class="badge bg-warning">
                             {{ $req->overall_status }}
                         </span>
+                        @elseif($req->overall_status =="pending_principle")
+                        @if(Auth::user()->role=="hod")
+                        <span class="badge bg-warning">
+                            {{ $req->overall_status }}
+                        </span>
+                        @elseif(Auth::user()->role=="admin")
+                        <span class="badge bg-warning">
+                            {{ $req->overall_status }}
+                        </span>
+
+                        @else
+                        <span class="badge bg-warning">
+                            Approved by HOD
+                        </span>
+                        @endif
+                        @else
+                        <span class="badge bg-success">
+                            Approved by principle
+                        </span>
+
+                        @endif
                     </td>
 
                     <td>{{ $req->request_date }}</td>
 
                     <td>
-                        <button class="btn btn-success btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#editModal{{ $req->id }}">
-                            Edit
-                        </button>
-                    </td>
+    <!-- Edit Button -->
+    <button class="btn btn-success btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#editModal{{ $req->id }}">
+        Edit
+    </button>
+
+    <!-- Approve Button -->
+    @if(Auth::user()->role=="hod" && $req->overall_status=="pending_hod")
+    <button class="btn btn-primary btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#approveModal{{ $req->id }}">
+        Approve
+    </button>
+    @elseif (Auth::user()->role=="admin" && $req->overall_status=="pending_principle")<button class="btn btn-primary btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#approveModal{{ $req->id }}">
+        Approve
+    </button>
+    @endif
+</td>
+<!-- Approve Modal -->
+<div class="modal fade" id="approveModal{{ $req->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Approve Request</h5>
+
+                <button type="button" class="btn-close"
+                    data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to approve this request?
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+                    No
+                </button>
+
+                <form action="{{ route('request.approve', $req->id) }}"
+                    method="POST">
+
+                    @csrf
+                    @method('PUT')
+
+                    <button type="submit"
+                        class="btn btn-primary">
+                        Yes, Approve
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
                 </tr>
 
                 <!-- EDIT MODAL -->
@@ -202,6 +280,5 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 @endsection

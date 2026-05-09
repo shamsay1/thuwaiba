@@ -11,7 +11,8 @@ class EquipmentController extends Controller
 {
      public function index()
     {
-        $equipments = Equipment::with('department')->get();
+        $department_id = Auth::user()->department_id;
+        $equipments = Equipment::with('department')->where('department_id',$department_id)->get();
         $departments = Department::all();
 
         return view('equipment', compact('equipments', 'departments'));

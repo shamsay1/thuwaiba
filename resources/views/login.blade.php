@@ -104,7 +104,7 @@
 <body>
 
 <div class="login-container">
-    <h2>Academic System</h2>
+    <h2>Kist Request equipment Management system</h2>
     <p>Login to your account</p>
 
     <form action="{{ route('login') }}" method="POST">

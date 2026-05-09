@@ -14,4 +14,6 @@ Route::get('/dashboard',[LoginController::class,"dashboard"])->name("dashboard")
 Route::resource('/departments',DepartmentCnotroller::class);
 Route::resource('/equipment',EquipmentController::class);
 Route::resource('/requests',UserRequestController::class);
+Route::put('/request/approve/{id}', [UserRequestController::class, 'approve'])
+    ->name('request.approve');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRequest extends Model
 {
      protected $fillable = [
-        'teacher_id',
+        'user_id',
         'department_id',
         'equipment_id',
         'quantity',
@@ -18,7 +18,7 @@ class UserRequest extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(User::class, 'teacher_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function department()

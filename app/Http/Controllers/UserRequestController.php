@@ -12,8 +12,12 @@ class UserRequestController extends Controller
 {
      public function index()
     {
-        $requests = UserRequest::with(['teacher','department','equipment'])->get();
-
+        $department_id = Auth::user()->department_id;
+        if(Auth::user()->role=="hod" || Auth::user()->role=="teacher"){
+        $requests = UserRequest::with(['teacher','department','equipment'])->where('department_id',$department_id)->get();
+        }else{
+            $requests = UserRequest::with(['teacher','department','equipment'])->get();
+        }
         $departments = Department::all();
         $equipments = Equipment::all();
 
@@ -56,4 +60,17 @@ class UserRequestController extends Controller
 
         return redirect()->back()->with('success','Updated successfully');
     }
+    public function approve($id)
+{
+    $request = UserRequest::findOrFail($id);
+    if($request->overall_status =="pending_hod"){
+    $request->overall_status = 'pending_principle';
+    }elseif($request->overall_status == 'pending_principle'){
+        $request->overall_status = 'approved';
+    }
+
+    $request->save();
+
+    return back()->with('success', 'Request approved successfully');
+}
 }

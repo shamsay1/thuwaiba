@@ -9,8 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Academic Dashboard</title>
 
-<!-- ✅ Bootstrap Icons -->
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 * {
@@ -234,19 +235,25 @@ li a{
         <img src="{{ asset('images/pic1.png') }}">
         @if (Auth::user()->role=="admin")
         <h4>Admin</h4>
+        <p>Kist Academic System</p>
+
         @elseif (Auth::user()->role=="hod")
         <h4>HOD</h4>
-        @elseif (Auth::user()->role=="principle")
-        <h4>Principle</h4>
-        @endif
+        <p>{{Auth::user()->department->department_name}}</p>
         <p>Kist Academic System</p>
+        @elseif (Auth::user()->role=="teacher")
+        <h4>Teacher</h4>
+        <p>{{Auth::user()->department->department_name}}</p>
+        <p>Kist Academic System</p>
+        
+        @endif
     </div>
 
     <ul>
         @if (Auth::user()->role=="admin")
         <li class="active"><i class="bi bi-speedometer2"></i> <a href="{{ route('dashboard') }}">Dashboard</a></li>
         <li><i class="bi bi-people"></i> <a href="{{ route('departments.index') }}">Departments</a></li>
-        <li><i class="bi bi-people"></i> <a href="{{ route('users.index') }}">Users</a></li>
+        <li><i class="bi bi-people"></i> <a href="{{ route('users.index') }}">Manage Users</a></li>
         <li><i class="bi bi-people"></i> <a href="{{ route('equipment.index') }}">Equipments</a></li>
         <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
         
@@ -258,7 +265,11 @@ li a{
         <li><i class="bi bi-people"></i> <a href="{{ route('equipment.index') }}">Equipments</a></li>
         <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
         <li><i class="bi bi-gear"></i> Settings</li>
-
+        @elseif (Auth::user()->role=="teacher")
+        <li class="active"><i class="bi bi-speedometer2"></i> <a href="{{ route('dashboard') }}">Dashboard</a></li>
+        <li><i class="bi bi-people"></i> <a href="{{ route('requests.index') }}">Requests</a></li>
+        <li><i class="bi bi-gear"></i> Settings</li>
+         
         @endif
     </ul>
 </div>
@@ -267,6 +278,7 @@ li a{
 
 <!-- MAIN -->
 @yield('content')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

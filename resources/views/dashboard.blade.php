@@ -1,4 +1,5 @@
 @extends('layout.app')
+
 @section('content')
 <div class="main">
 
@@ -16,28 +17,163 @@
 </div>
 
     <div class="content">
+     <div class="container-fluid mt-4">
 
-        <div class="cards">
-            <div class="card">
-                <h4>Total Teachers</h4>
-                <h2>{{ $total_teachers }}</h2>
-            </div>
+    @if(Auth::user()->role=="admin")
 
-            <div class="card">
-                <h4>Total HOD</h4>
-                <h2>{{ $total_hod }}</h2>
-            </div>
+    <div class="row g-4">
 
-            <div class="card">
-                <h4>Total Equipment</h4>
-                <h2>{{ $total_equipment }}</h2>
-            </div>
+        <!-- Total Teachers -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
 
-            <div class="card">
-                <h4>Total request</h4>
-                <h2>{{ $total_request }}</h2>
+                    <div>
+                        <h6 class="text-muted mb-2">Total Teachers</h6>
+                        <h2 class="fw-bold text-primary">
+                            {{ $total_teachers }}
+                        </h2>
+                    </div>
+
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+                        <i class="bi bi-person-fill fs-2 text-primary"></i>
+                    </div>
+
+                </div>
             </div>
         </div>
+
+        <!-- Total HOD -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h6 class="text-muted mb-2">Total HOD</h6>
+                        <h2 class="fw-bold text-success">
+                            {{ $total_hod }}
+                        </h2>
+                    </div>
+
+                    <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+                        <i class="bi bi-person-badge-fill fs-2 text-success"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Equipment -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h6 class="text-muted mb-2">Total Equipment</h6>
+                        <h2 class="fw-bold text-warning">
+                            {{ $total_equipment->count() }}
+                        </h2>
+                    </div>
+
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+                        <i class="bi bi-pc-display fs-2 text-warning"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Request -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h6 class="text-muted mb-2">Total Request</h6>
+                        <h2 class="fw-bold text-danger">
+                            {{ $total_request->count() }}
+                        </h2>
+                    </div>
+
+                    <div class="bg-danger bg-opacity-10 p-3 rounded-circle">
+                        <i class="bi bi-envelope-paper-fill fs-2 text-danger"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @elseif(Auth::user()->role=="hod")
+
+    <div class="row g-4">
+
+        <!-- Total Teachers -->
+        <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h6 class="text-muted mb-2">Total Teachers</h6>
+                        <h2 class="fw-bold text-primary">
+                            {{ $teachers->count() }}
+                        </h2>
+                    </div>
+
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+                        <i class="bi bi-person-fill fs-2 text-primary"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Equipment -->
+        <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h6 class="text-muted mb-2">Total Equipment</h6>
+                        <h2 class="fw-bold text-warning">
+                            {{ $total_equipment->where('department_id',Auth::user()->department_id)->count() }}
+                        </h2>
+                    </div>
+
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+                        <i class="bi bi-pc-display fs-2 text-warning"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Request -->
+        <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-lg rounded-4 h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h6 class="text-muted mb-2">Total Request</h6>
+                        <h2 class="fw-bold text-danger">
+                            {{ $total_request->where('department_id',Auth::user()->department_id)->count() }}
+                        </h2>
+                    </div>
+
+                    <div class="bg-danger bg-opacity-10 p-3 rounded-circle">
+                        <i class="bi bi-envelope-paper-fill fs-2 text-danger"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @endif
+
+</div>
 
        <div class="table-container-wrapper">
 
@@ -108,6 +244,9 @@
             
 
         </table>
+        <div style="text-align: center;margin-top: 4px">
+        <a href="" style="text-decoration: none">Viewl all</a>
+        </div>
 
     </div>
 
